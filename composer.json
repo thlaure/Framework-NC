@@ -1,0 +1,15 @@
+{
+    "name": "thomasl/fermedesessarts",
+    "autoload": {
+        "psr-4": {
+            "Router\\": "routes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Thomas LAURE",
+            "email": "thomas.laure@ik.me"
+        }
+    ],
+    "require": {}
+}
