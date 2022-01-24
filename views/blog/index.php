@@ -1,2 +1,13 @@
-<h1>Homepage</h1>
-<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam sit in repellat suscipit? Commodi sunt quos, illum nisi exercitationem inventore illo perspiciatis molestiae debitis aspernatur, labore repellat recusandae? Fuga, dolor!</p>
+<h1>Les derniers articles</h1>
+
+<?php $nbPosts = count($posts = $params['posts']) ?>
+<?php for ($i = 0; $i < $nbPosts; ++$i) : ?>
+    <?php $post = $posts[$i] ?>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h2><?= $post->title ?></h2>
+            <p><?= $post->content ?></p>
+            <a href="/posts/<?= $post->id ?>" class="btn btn-primary">Lire plus</a>
+        </div>
+    </div>
+<?php endfor ?>
