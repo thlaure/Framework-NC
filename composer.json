@@ -1,5 +1,5 @@
 {
-    "name": "thomasl/fermedesessarts",
+    "name": "thomasl/framework_nc",
     "autoload": {
         "psr-4": {
             "Router\\": "routes/",
