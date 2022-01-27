@@ -17,16 +17,27 @@ abstract class Model
 
     public function all(): array
     {
-        $stmt = $this->db->getPDO()->query("SELECT * FROM {$this->table} ORDER BY created_at DESC");
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this), [$this->db]);
-        return $stmt->fetchAll();
+        return $this->query("SELECT * FROM {$this->table} ORDER BY created_at DESC");
     }
 
     public function findById(int $id): self
     {
-        $stmt = $this->db->getPDO()->prepare("SELECT * FROM {$this->table} WHERE id = ?");
+        return $this->query("SELECT * FROM {$this->table} WHERE id = ?", $id, true);
+    }
+
+    public function query(string $queryString, int $param = null, bool $single = null)
+    {
+        $method = $param === null ? 'query' : 'prepare';
+        $fetch = $single === null ? 'fetchAll' : 'fetch';
+
+        $stmt = $this->db->getPDO()->$method($queryString);
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this), [$this->db]);
-        $stmt->execute([$id]);
-        return $stmt->fetch();
+
+        if ($method === 'query') {
+            return $stmt->$fetch();
+        } else {
+            $stmt->execute([$param]);
+            return $stmt->$fetch();
+        }
     }
 }
