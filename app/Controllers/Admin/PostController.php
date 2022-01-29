@@ -21,4 +21,19 @@ class PostController extends Controller
             return header('Location: /admin/posts');
         }
     }
+
+    public function edit(int $id)
+    {
+        $post = (new Post($this->getDB()))->findById($id);
+        return $this->view('admin.post.edit', compact('post'));
+    }
+
+    public function update(int $id)
+    {
+        $post  = new Post($this->getDB());
+        $result = $post->update($id, $_POST);
+        if ($result) {
+            return header('Location: /admin/posts');
+        }
+    }
 }
