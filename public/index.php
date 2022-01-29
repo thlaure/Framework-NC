@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\NotFoundException;
 use Router\Router;
 
 require '../vendor/autoload.php';
@@ -18,4 +19,8 @@ $router->get('/posts', 'App\Controllers\BlogController@index');
 $router->get('/posts/:id', 'App\Controllers\BlogController@show');
 $router->get('/tags/:i', 'App\Controllers\BlogController@tag');
 
-$router->run();
+try {
+    $router->run();
+} catch (NotFoundException $e) {
+    echo $e->error404();
+}

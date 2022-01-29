@@ -2,6 +2,8 @@
 
 namespace Router;
 
+use App\Exceptions\NotFoundException;
+
 class Router
 {
     public string $url;
@@ -24,6 +26,6 @@ class Router
                 return $route->execute();
             }
         }
-        return header('HTTP/1.0 404 Not Found');
+        throw new NotFoundException('La page demandée est introuvable');
     }
 }
