@@ -12,7 +12,7 @@
                 $nbTags = count($tags);
                 ?>
                 <?php for ($j = 0; $j < $nbTags; ++$j) : ?>
-                    <span><?= $tags[$j]->name ?></span>
+                    <span><a href="/tags/<?= $tags[$j]->id ?>"><?= $tags[$j]->name ?></a></span>
                 <?php endfor ?>
             </div>
             <small>Publié le <?= $post->getCreatedAt() ?></small>

@@ -27,9 +27,8 @@ HTML;
 
     public function getTags()
     {
-        return $this->query("SELECT t.* FROM tag t
+        return $this->query('SELECT t.* FROM tag t
         INNER JOIN post_tag pt ON pt.tag_id = t.id
-        INNER JOIN post p ON pt.post_id = p.id
-        WHERE p.id = ?", $this->id);
+        WHERE pt.post_id = ?', $this->id);
     }
 }
