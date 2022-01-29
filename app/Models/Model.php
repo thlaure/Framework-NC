@@ -28,10 +28,14 @@ abstract class Model
     public function query(string $queryString, int $param = null, bool $single = null)
     {
         $method = $param === null ? 'query' : 'prepare';
-        $fetch = $single === null ? 'fetchAll' : 'fetch';
-
         $stmt = $this->db->getPDO()->$method($queryString);
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this), [$this->db]);
+
+        if (strpos($queryString, 'DELETE') === 0 || strpos($queryString, 'UPDATE') === 0 || strpos($queryString, 'CREATE') === 0) {
+            return $stmt->execute([$param]);
+        }
+
+        $fetch = $single === null ? 'fetchAll' : 'fetch';
 
         if ($method === 'query') {
             return $stmt->$fetch();
@@ -39,5 +43,10 @@ abstract class Model
             $stmt->execute([$param]);
             return $stmt->$fetch();
         }
+    }
+
+    public function delete(int $id): bool
+    {
+        return $this->query("DELETE FROM {$this->table} WHERE id = ?", $id);
     }
 }

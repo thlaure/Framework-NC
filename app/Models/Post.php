@@ -10,7 +10,7 @@ class Post extends Model
 
     public function getCreatedAt(): string
     {
-        return (new DateTime($this->created_at))->format('d/m/Y à H:m');
+        return (new DateTime($this->created_at))->format('d/m/Y à H:i');
     }
 
     public function getExcerpt(): string
