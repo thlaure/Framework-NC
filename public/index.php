@@ -20,6 +20,8 @@ $router->get('/posts/:id', 'App\Controllers\BlogController@show');
 $router->get('/tags/:i', 'App\Controllers\BlogController@tag');
 
 $router->get('/admin/posts', 'App\Controllers\Admin\PostController@index');
+$router->get('/admin/posts/create', 'App\Controllers\Admin\PostController@create');
+$router->post('/admin/posts/create', 'App\Controllers\Admin\PostController@createPost');
 $router->post('/admin/posts/delete/:id', 'App\Controllers\Admin\PostController@delete');
 $router->get('/admin/posts/edit/:id', 'App\Controllers\Admin\PostController@edit');
 $router->post('/admin/posts/edit/:id', 'App\Controllers\Admin\PostController@update');

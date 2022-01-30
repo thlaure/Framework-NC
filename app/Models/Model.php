@@ -56,11 +56,29 @@ abstract class Model
         $i = 1;
         $nbData = count($data);
         foreach ($data as $key => $value) {
-            $comma = $i === $nbData ? ' ' : ', ';
+            $comma = $i === $nbData ? '' : ', ';
             $queryPart .= "{$key} = :{$key}{$comma}";
             ++$i;
         }
         $data['id'] = $id;
         return $this->query("UPDATE {$this->table} SET {$queryPart} WHERE id = :id", $data);
+    }
+
+    public function create(array $data, ?array $relations = null)
+    {
+        $firstParenthesis = '';
+        $secondParenthesis = '';
+
+        $i = 1;
+        $nbData = count($data);
+        foreach ($data as $key => $value) {
+            $comma = $i === $nbData ? '' : ', ';
+            $firstParenthesis .= "{$key}{$comma}";
+            $secondParenthesis .= ":{$key}{$comma}";
+            ++$i;
+        }
+        // var_dump($this->query("INSERT INTO $this->table ($firstParenthesis) VALUE ($secondParenthesis)", $data));die();
+
+        return $this->query("INSERT INTO {$this->table} ($firstParenthesis) VALUE ($secondParenthesis)", $data);
     }
 }

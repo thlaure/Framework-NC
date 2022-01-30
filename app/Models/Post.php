@@ -32,6 +32,19 @@ HTML;
         WHERE pt.post_id = ?', [$this->id]);
     }
 
+    public function create(array $data, ?array $relations = null)
+    {
+        parent::create($data);
+        $id = $this->db->getPDO()->lastInsertId();
+        $nbRelations = count($relations);
+        $pdo = $this->db->getPDO();
+        for ($i = 0; $i < $nbRelations; ++$i) {
+            $stmt = $pdo->prepare('INSERT post_tag (post_id, tag_id) VALUES (?, ?)');
+            $stmt->execute([$id, $relations[$i]]);
+        }
+        return true;
+    }
+
     public function update(int $id, array $data, ?array $relations = null): bool
     {
         parent::update($id, $data);
