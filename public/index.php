@@ -26,6 +26,10 @@ $router->post('/admin/posts/delete/:id', 'App\Controllers\Admin\PostController@d
 $router->get('/admin/posts/edit/:id', 'App\Controllers\Admin\PostController@edit');
 $router->post('/admin/posts/edit/:id', 'App\Controllers\Admin\PostController@update');
 
+$router->get('/login', 'App\Controllers\UserController@login');
+$router->post('/login', 'App\Controllers\UserController@loginPost');
+$router->get('/logout', 'App\Controllers\UserController@logout');
+
 try {
     $router->run();
 } catch (NotFoundException $e) {

@@ -26,6 +26,16 @@
                         <a class="nav-link" href="/posts">Articles</a>
                     </li>
                 </ul>
+
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <?php if (isset($_SESSION['auth'])) : ?>
+                            <a class="nav-link active" aria-current="page" href="/logout">Se déconnecter</a>
+                        <?php else : ?>
+                            <a class="nav-link active" aria-current="page" href="/login">Se connecter</a>
+                        <?php endif ?>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
