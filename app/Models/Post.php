@@ -31,4 +31,22 @@ HTML;
         INNER JOIN post_tag pt ON pt.tag_id = t.id
         WHERE pt.post_id = ?', [$this->id]);
     }
+
+    public function update(int $id, array $data, ?array $relations = null): bool
+    {
+        parent::update($id, $data);
+        $stmt = $this->db->getPDO()->prepare('DELETE FROM post_tag WHERE post_id = ?');
+        $result = $stmt->execute([$id]);
+
+        $nbRelations = count($relations);
+        $queryPart = '';
+        for ($i = 1; $i <= $nbRelations; ++$i) {
+            $comma = $i === $nbRelations ? '' : ', ';
+            $queryPart .= "({$id}, {$relations[$i - 1]}){$comma}";
+        }
+        $this->db->getPDO()->query("INSERT INTO post_tag (post_id, tag_id) VALUES {$queryPart}");
+        if ($result) {
+            return true;
+        }
+    }
 }
